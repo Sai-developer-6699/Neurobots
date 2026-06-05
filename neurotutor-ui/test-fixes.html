@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Fixes</title>
+</head>
+<body>
+    <h1>Testing Fixes</h1>
+    
+    <h2>1. Test Course Material API</h2>
+    <button onclick="testCourseMaterial()">Test Course Material</button>
+    <div id="course-result"></div>
+    
+    <h2>2. Test Explanation API</h2>
+    <button onclick="testExplanation()">Test Explanation</button>
+    <div id="explanation-result"></div>
+    
+    <h2>3. Check Authentication</h2>
+    <button onclick="checkAuth()">Check Auth Status</button>
+    <div id="auth-result"></div>
+
+    <script>
+        async function testCourseMaterial() {
+            const resultDiv = document.getElementById('course-result');
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/course/material/?concept=arrays');
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h3>✅ Course Material API Works</h3>
+                    <p>Status: ${response.status}</p>
+                    <p>Content length: ${data.content?.length || 0} characters</p>
+                    <p>Concept: ${data.concept}</p>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3>❌ Course Material API Failed</h3>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+        }
+        
+        async function testExplanation() {
+            const resultDiv = document.getElementById('explanation-result');
+            try {
+                const token = localStorage.getItem('access_token') || document.cookie.match(/access_token=([^;]+)/)?.[1];
+                const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+                
+                const response = await fetch('http://127.0.0.1:8000/api/question/explanation/?question_id=1', {
+                    headers
+                });
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <h3>${response.ok ? '✅' : '❌'} Explanation API</h3>
+                    <p>Status: ${response.status}</p>
+                    <p>Token present: ${!!token}</p>
+                    <p>Response: ${JSON.stringify(data, null, 2)}</p>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3>❌ Explanation API Failed</h3>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+        }
+        
+        function checkAuth() {
+            const resultDiv = document.getElementById('auth-result');
+            const token = localStorage.getItem('access_token') || document.cookie.match(/access_token=([^;]+)/)?.[1];
+            
+            resultDiv.innerHTML = `
+                <h3>Authentication Status</h3>
+                <p>Token in localStorage: ${!!localStorage.getItem('access_token')}</p>
+                <p>Token in cookies: ${!!document.cookie.match(/access_token=([^;]+)/)}</p>
+                <p>Token length: ${token?.length || 0}</p>
+                <p>Token preview: ${token ? token.substring(0, 20) + '...' : 'None'}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
