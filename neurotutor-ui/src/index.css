@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  :root {
+    /* Neuro-Futuristic Theme (Dark Default) */
+    --background: 240 50% 3%;
+    /* #05050a */
+    --foreground: 210 20% 90%;
+    /* #e0e0e0 */
+
+    --card: 240 50% 5%;
+    /* slightly lighter than bg */
+    --card-foreground: 210 20% 90%;
+
+    --popover: 240 50% 5%;
+    --popover-foreground: 210 20% 90%;
+
+    --primary: 183 100% 50%;
+    /* #00f3ff Neon Cyan */
+    --primary-foreground: 240 50% 3%;
+
+    --secondary: 283 99% 54%;
+    /* #bc13fe Neon Purple */
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 240 30% 15%;
+    --muted-foreground: 215 20% 70%;
+
+    --accent: 183 100% 50%;
+    --accent-foreground: 240 50% 3%;
+
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 30% 20%;
+    --input: 240 30% 20%;
+    --ring: 183 100% 50%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Same as root because we are enforcing dark mode */
+    --background: 240 50% 3%;
+    --foreground: 210 20% 90%;
+
+    --card: 240 50% 5%;
+    --card-foreground: 210 20% 90%;
+
+    --popover: 240 50% 5%;
+    --popover-foreground: 210 20% 90%;
+
+    --primary: 183 100% 50%;
+    --primary-foreground: 240 50% 3%;
+
+    --secondary: 283 99% 54%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 240 30% 15%;
+    --muted-foreground: 215 20% 70%;
+
+    --accent: 183 100% 50%;
+    --accent-foreground: 240 50% 3%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 30% 20%;
+    --input: 240 30% 20%;
+    --ring: 183 100% 50%;
+  }
+}
+
+/* Custom Animations and Global Styles */
+@layer utilities {
+  .bg-grid {
+    background-size: 50px 50px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+  }
+
+  .animate-scan {
+    animation: scan 20s linear infinite;
+  }
+}
+
+@keyframes scan {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+}
